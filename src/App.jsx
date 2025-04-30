@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 const App = () => {
 
   const dispatch = useDispatch()
-  // const { data, loading, error } = useSelector(state => state.data)
+  const { data } = useSelector(state => state.data)
   const [query, setQuery] = useState('');
   const { results, loading, error } = useSelector(state => state.search)
 
@@ -31,7 +31,7 @@ const App = () => {
         />
         {loading && <p>Loading...</p>}
         {error && <p>Error: {error}</p>}
-        {!results.length && !loading && <p>No results.</p>}
+        {!results.length && !loading && query && <p>No results.</p>}
         {results.map(item => (
           <div key={item.id}>
             <h1 className='font-bold'>{item.title}</h1>
@@ -48,6 +48,17 @@ const App = () => {
           ))}
         </ul>
       </div> */}
+      {
+        !query &&
+        <>
+          {data?.map(item => (
+            <div key={item.id}>
+              <h1 className='font-bold'>{item.title}</h1>
+              <p>{item.body}</p>
+            </div>
+          ))}
+        </>
+      }
     </div>
   )
 }
